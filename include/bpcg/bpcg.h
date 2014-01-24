@@ -56,7 +56,8 @@ using namespace std;
 
 //typedef Matrix<double,6,1> Vector6d;
 //typedef Vector6d::AlignedMapType AV6d;
-
+#define AVNd typename Matrix<double,N,1>::AlignedMapType
+#define AVNd_CONST typename Matrix<double,N,1>::ConstAlignedMapType
 namespace sba
 {
   /// Let's try templated versions
@@ -116,7 +117,7 @@ namespace sba
       if (cols.size() > 0)
         for (int i=0; i<(int)cols.size(); i++)
           {
-            vout.segment<N>(i*N) = diag[i]*vin.segment<N>(i*N); // only works with cols ordering
+            AVNd(&vout(i*N)) = diag[i]*AVNd(&vin(i*N)); // only works with cols ordering
 
             map<int,Matrix<double,N,N>, less<int>, 
               aligned_allocator<Matrix<double,N,N> > > &col = cols[i];
@@ -124,12 +125,12 @@ namespace sba
               {
                 typename map<int,Matrix<double,N,N>, less<int>, // need "typename" here, barf
                   aligned_allocator<Matrix<double,N,N > > >::iterator it;
-                for (it = col.begin(); it != col.end(); it++)
+                for (it = col.begin(); it != col.end(); ++it)
                   {
                     int ri = (*it).first; // get row index
                     const Matrix<double,N,N> &M = (*it).second; // matrix
-                    vout.segment<N>(i*N)  += M.transpose()*vin.segment<N>(ri*N);
-                    vout.segment<N>(ri*N) += M*vin.segment<N>(i*N);
+                    AVNd(&vout(i*N))  += M.transpose()*AVNd(&vin(ri*N));
+                    AVNd(&vout(ri*N)) += M*AVNd(&vin(i*N));
                   }
               }
           }
@@ -148,15 +149,15 @@ namespace sba
       // loop over off-diag entries
       if (diag.size() > 0)
         for (int i=0; i<(int)diag.size(); i++)
-          vout.segment<N>(i*N) = diag[i]*vin.segment<N>(i*N); // only works with cols ordering
+          AVNd(&vout(i*N)) = diag[i]*AVNd_CONST(&vin(i*N));; // only works with cols ordering
 
       for (int i=0; i<(int)vcind.size(); i++)
         {
           int ri = vrind[i];
           int ii = vcind[i];
           const Matrix<double,N,N> &M = vcols[i];
-          vout.segment<N>(ri*N) += M*vin.segment<N>(ii*N);
-          vout.segment<N>(ii*N) += M.transpose()*vin.segment<N>(ri*N);
+          AVNd(&vout(ri*N)) += M*AVNd_CONST(&vin(ii*N));
+          AVNd(&vout(ii*N)) += M.transpose()*AVNd_CONST(&vin(ri*N));
         }
     }
 
@@ -170,7 +171,7 @@ namespace sba
     {
       // loop over diag entries
       for (int i=0; i<(int)diag.size(); i++)
-        vout.segment<N>(i*N) = diag[i]*vin.segment<N>(i*N);
+        AVNd(&vout(i*N)) = diag[i]*AVNd(&vin(i*N));
     }
 
 
@@ -265,7 +266,7 @@ namespace sba
             {
               typename map<int,Matrix<double,N,N>, less<int>, 
                 aligned_allocator<Matrix<double,N,N> > >::iterator it;
-              for (it = col.begin(); it != col.end(); it++)
+              for (it = col.begin(); it != col.end(); ++it)
                 {
                   int ri = (*it).first; // get row index
                   vrind.push_back(ri);

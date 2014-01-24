@@ -72,7 +72,7 @@ mMV(vector< Matrix<double,6,6>, aligned_allocator<Matrix<double,6,6> > > &diag,
 	  {
 	    map<int,Matrix<double,6,6>, less<int>, 
 	      aligned_allocator<Matrix<double,6,6> > >::iterator it;
-	    for (it = col.begin(); it != col.end(); it++)
+	    for (it = col.begin(); it != col.end(); ++it)
 	      {
 		int ri = (*it).first; // get row index
 		const Matrix<double,6,6> &M = (*it).second; // matrix
@@ -255,7 +255,7 @@ mMV3(vector< Matrix<double,3,3>, aligned_allocator<Matrix<double,3,3> > > &diag,
 	  {
 	    map<int,Matrix<double,3,3>, less<int>, 
 	      aligned_allocator<Matrix<double,3,3> > >::iterator it;
-	    for (it = col.begin(); it != col.end(); it++)
+	    for (it = col.begin(); it != col.end(); ++it)
 	      {
 		int ri = (*it).first; // get row index
 		const Matrix<double,3,3> &M = (*it).second; // matrix
@@ -340,7 +340,7 @@ bpcg_jacobi3(int iters, double tol,
 	{
 	  map<int,Matrix<double,3,3>, less<int>, 
 	    aligned_allocator<Matrix<double,3,3> > >::iterator it;
-          for (it = col.begin(); it != col.end(); it++)
+          for (it = col.begin(); it != col.end(); ++it)
 	    {
 	      int ri = (*it).first; // get row index
 	      vrind.push_back(ri);
