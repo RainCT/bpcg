@@ -1,0 +1,14 @@
+<package>
+  <name>bpcg</name>
+  <version>0.0.2014</version>
+  <description>Block PCG, using block Jacobi preconditioner</description>
+  <maintainer email="luca.marchionni@pal-robotics.com">Luca Marchionni</maintainer>
+  <author>Kurt Konolige</author>
+  <license>BSD</license>
+
+  <run_depend>catkin</run_depend>
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>eigen</build_depend>
+
+</package>
