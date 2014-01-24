@@ -44,6 +44,7 @@
 #define EIGEN_USE_NEW_STDVECTOR
 #endif // EIGEN_USE_NEW_STDVECTOR
 
+#include <iostream>
 #include <vector>
 #include <map>
 #include <Eigen/Core>
