@@ -1,20 +1,16 @@
 cmake_minimum_required(VERSION 2.8.3)
-
 project(bpcg)
 
-include_directories(include)
-
 find_package(catkin REQUIRED)
-find_package(Eigen REQUIRED)
 
 find_package(Boost REQUIRED COMPONENTS thread)
-include_directories(include ${Boost_INCLUDE_DIRS} ${catkin_INCLUDE_DIRS})
+
+find_package(Eigen REQUIRED)
+add_definitions(${EIGEN_DEFINITIONS})
 
 add_definitions(-Wall)
 
-find_package(Eigen)
-include_directories(${EIGEN_INCLUDE_DIRS})
-add_definitions(${EIGEN_DEFINITIONS})
+include_directories(include ${Boost_INCLUDE_DIRS} ${EIGEN_INCLUDE_DIRS} ${catkin_INCLUDE_DIRS})
 
 catkin_package(
     LIBRARIES bpcg
