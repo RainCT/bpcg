@@ -19,7 +19,6 @@ add_definitions(${EIGEN_DEFINITIONS})
 catkin_package(
     LIBRARIES bpcg
     INCLUDE_DIRS include
-    DEPENDS eigen
 )
 
 add_library(bpcg
