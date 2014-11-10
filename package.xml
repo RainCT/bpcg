@@ -1,6 +1,6 @@
 <package>
   <name>bpcg</name>
-  <version>0.0.0</version>
+  <version>0.0.1</version>
   <description>Block PCG, using block Jacobi preconditioner</description>
   <maintainer email="luca.marchionni@pal-robotics.com">Luca Marchionni</maintainer>
   <author>Kurt Konolige</author>
